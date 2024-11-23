@@ -19,7 +19,7 @@ public class contact {
         this.groupc = groupc;
         this.uid = uid;
     }
-
+//
     public int getCid() {
         return cid;
     }
