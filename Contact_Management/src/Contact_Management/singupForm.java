@@ -305,7 +305,7 @@ public class singupForm extends javax.swing.JFrame {
         txtNewUser.setText("");
         txtEmail.setText("");
         txtPhone.setText("");
-        txtNewUser.setText("");
+        txtFullname.setText("");
         newPassword.setText("");
         newRePass.setText("");
 
