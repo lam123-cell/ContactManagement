@@ -2,6 +2,12 @@ package Contact_Management;
 
 
 import java.awt.Color;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -12,6 +18,7 @@ import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableRowSorter;
+
 
 public class MyContactsForm extends javax.swing.JFrame {
     
@@ -43,10 +50,32 @@ public class MyContactsForm extends javax.swing.JFrame {
 
         th.setForeground(Color.BLUE);
         
-        jLabel6.setText("Xin Chào, " + currentUsername);
+        // Gọi phương thức để lấy fullname
+        String fullname = getFullname(currentUSerID);
+        jLabel6.setText("Xin Chào, " + fullname);
         System.out.println(currentUSerID + " From contact");
         
        
+    }
+    // Phương thức để lấy fullname 
+    private String getFullname(int userID) {
+        String fullname = "";
+        Connection con = myConnection.getConnection();
+        PreparedStatement ps;
+        ResultSet rs;
+
+        try {
+            ps = con.prepareStatement("SELECT fullname FROM user WHERE id = ?");
+            ps.setInt(1, userID);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                fullname = rs.getString("fullname");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MyContactsForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return fullname;
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -103,10 +132,10 @@ public class MyContactsForm extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(61, 61, 61)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(17, 17, 17))
