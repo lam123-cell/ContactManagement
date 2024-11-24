@@ -238,10 +238,10 @@ public class loginForm extends javax.swing.JFrame {
             
             if(rs.next()){
                 String name = rs.getString("username");
-                JOptionPane.showMessageDialog(null,"Đăng nhập vào " +name);
-                
-                MyContactsForm.currentUSerID = rs.getInt("id");
-                System.out.println(rs.getInt("id")+ "from login");
+                MyContactsForm.currentUsername = name; // Lưu tên người dùng
+                MyContactsForm.currentUSerID = rs.getInt("id"); // Lưu ID người dùng
+                JOptionPane.showMessageDialog(null, "Đăng nhập vào " + name);
+
                 MyContactsForm mcf = new MyContactsForm();
                 mcf.setVisible(true);
                 mcf.pack();
