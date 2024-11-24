@@ -240,7 +240,7 @@ public class loginForm extends javax.swing.JFrame {
                 String name = rs.getString("username");
                 MyContactsForm.currentUsername = name; // Lưu tên người dùng
                 MyContactsForm.currentUSerID = rs.getInt("id"); // Lưu ID người dùng
-                JOptionPane.showMessageDialog(null, "Đăng nhập vào " + name);
+                JOptionPane.showMessageDialog(null, "Đăng nhập thành công");
 
                 MyContactsForm mcf = new MyContactsForm();
                 mcf.setVisible(true);
