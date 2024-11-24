@@ -11,6 +11,9 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 
 
 public class singupForm extends javax.swing.JFrame {
@@ -242,6 +245,25 @@ public class singupForm extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    
+    public String hashPassword(String password) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] hash = md.digest(password.getBytes());
+            StringBuilder hexString = new StringBuilder();
+            
+            for (byte b : hash) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) hexString.append('0');
+                hexString.append(hex);
+            }
+            
+            return hexString.toString();
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    
     public static boolean checkEmail(String input){
         String emailRegex =  "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$";
         Pattern emailPat = Pattern.compile(emailRegex,Pattern.CASE_INSENSITIVE);
@@ -332,11 +354,12 @@ public class singupForm extends javax.swing.JFrame {
         PreparedStatement ps;
         
         try {
+              String hashedPassword = hashPassword(String.valueOf(newPassword.getPassword()));
               ps = con.prepareStatement("INSERT INTO `user`(`username`, `email`, `numberphone`, `password`) VALUES (?,?,?,?)");
               ps.setString(1, txtNewUser.getText());
               ps.setString(2, txtEmail.getText());
               ps.setString(3, txtPhone.getText());
-              ps.setString(4, String.valueOf(newPassword.getPassword()));
+              ps.setString(4, hashedPassword);
               
               if(isUserNameExit(txtNewUser.getText())){
                   JOptionPane.showMessageDialog(null, "Tài khoảng đã tồn tại !");
