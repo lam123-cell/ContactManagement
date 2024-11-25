@@ -1,4 +1,4 @@
-package Contact_Management;
+package model;
 
 public class contact {
     private Integer cid; 

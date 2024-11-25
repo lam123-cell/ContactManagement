@@ -1,4 +1,4 @@
-package Contact_Management;
+package model;
 
 
 import java.sql.Connection;
@@ -130,4 +130,34 @@ public class contactQuery {
         return clist;
     }
     
+    public ArrayList<contact> getContactsByGroup(int userId, String group) {
+    ArrayList<contact> clist = new ArrayList<contact>();
+    
+    Connection con = myConnection.getConnection();
+    PreparedStatement ps;
+    ResultSet rs;
+
+    try {
+        ps = con.prepareStatement("SELECT `id`, `name`, `phone`, `email`, `groupc` FROM `mycontact` WHERE userid = ? AND groupc = ?");
+        ps.setInt(1, userId);
+        ps.setString(2, group);
+        rs = ps.executeQuery();
+        
+        contact ct; 
+        while(rs.next()){
+            ct = new contact(rs.getInt("id"),
+                             rs.getString("name"),
+                             rs.getString("phone"),
+                             rs.getString("email"),
+                             rs.getString("groupc"),
+                             userId);
+            clist.add(ct);
+        }
+    } catch (SQLException ex) {
+        Logger.getLogger(contactQuery.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    
+    return clist;
+}
+
 }

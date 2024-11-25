@@ -1,4 +1,4 @@
-package Contact_Management;
+package model;
 
 
 import java.sql.Connection;
@@ -16,8 +16,8 @@ public class myConnection {
            
         Connection con = null;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/javacontactapp", "root", "");
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/javacontactsapp", "root", "");
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }

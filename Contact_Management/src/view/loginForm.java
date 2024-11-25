@@ -1,6 +1,7 @@
-package Contact_Management;
+package view;
 
 
+import model.myConnection;
 import javax.swing.JFrame;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,6 +13,8 @@ import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+
+
 
 public class loginForm extends javax.swing.JFrame {
 

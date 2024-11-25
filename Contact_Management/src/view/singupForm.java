@@ -1,6 +1,7 @@
-package Contact_Management;
+package view;
  
 
+import model.myConnection;
 import javax.swing.JFrame;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,6 +14,7 @@ import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+
 
 
 

@@ -1,6 +1,8 @@
-package Contact_Management;
+package view;
 
-
+import model.contact;
+import model.contactQuery;
+import model.myConnection;
 import java.awt.Color;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -18,6 +20,7 @@ import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableRowSorter;
+
 
 
 public class MyContactsForm extends javax.swing.JFrame {
@@ -77,6 +80,33 @@ public class MyContactsForm extends javax.swing.JFrame {
 
         return fullname;
     }
+    
+    private void showContactsByGroup(String group) {
+        contactQuery cq = new contactQuery();
+        ArrayList<contact> ctList = cq.getContactsByGroup(currentUSerID, group);
+
+        if (ctList.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Không có liên hệ nào trong nhóm này.");
+            return; // Dừng lại nếu không có dữ liệu
+        }
+
+        String[] colNames = {"ID", "Name", "Phone", "Email", "Group"};
+        DefaultTableModel model = new DefaultTableModel();
+        model.setColumnIdentifiers(colNames);
+
+        for (contact c : ctList) {
+            Object[] rows = new Object[5];
+            rows[0] = c.getCid();
+            rows[1] = c.getName();
+            rows[2] = c.getPhone();
+            rows[3] = c.getEmail();
+            rows[4] = c.getGroupc();
+            model.addRow(rows);
+        }
+        jTable1.setModel(model);
+    }
+
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -103,6 +133,10 @@ public class MyContactsForm extends javax.swing.JFrame {
         btnClear = new javax.swing.JButton();
         txtSearch = new javax.swing.JTextField();
         btnsearch = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(153, 153, 153));
@@ -124,7 +158,7 @@ public class MyContactsForm extends javax.swing.JFrame {
         });
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contact_Management/1.png"))); // NOI18N
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/1.png"))); // NOI18N
         jLabel6.setText("jLabel6");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -263,6 +297,39 @@ public class MyContactsForm extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("Family");
+        jButton1.setToolTipText("");
+        jButton1.setActionCommand("btnFamily");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Friend");
+        jButton2.setActionCommand("btnFriends");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("Other");
+        jButton3.setActionCommand("btnOrthers");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setText("Cancel");
+        jButton4.setActionCommand("btnCancel");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -296,15 +363,28 @@ public class MyContactsForm extends javax.swing.JFrame {
                         .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnsearch, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGap(0, 30, Short.MAX_VALUE)
-                        .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(jButton1)
+                                .addGap(55, 55, 55)
+                                .addComponent(jButton2)
+                                .addGap(53, 53, 53)
+                                .addComponent(jButton3)
+                                .addGap(12, 12, 12)))))
                 .addGap(15, 15, 15)
-                .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(jButton4)
+                        .addGap(17, 17, 17)))
                 .addGap(25, 25, 25))
         );
         jPanel2Layout.setVerticalGroup(
@@ -339,7 +419,13 @@ public class MyContactsForm extends javax.swing.JFrame {
                     .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(61, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2)
+                    .addComponent(jButton3)
+                    .addComponent(jButton4))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -365,22 +451,28 @@ public class MyContactsForm extends javax.swing.JFrame {
     public void JTableView(){
         contactQuery cq = new contactQuery();
         ArrayList<contact> ctList = cq.contacList(currentUSerID);
-                String[] colNames = {"ID","Name","Phone","Email","Group"};
+
+        String[] colNames = {"ID", "Name", "Phone", "Email", "Group"};
         DefaultTableModel model = new DefaultTableModel();
         model.setColumnIdentifiers(colNames);
-       // Object[] rows = new Object[ctList.size()];
-        for(int i = 0; i < ctList.size(); i++){
-            Object[] rows = new Object[5];
-           rows[0] = ctList.get(i).getCid();
-           rows[1] = ctList.get(i).getName();
-           rows[2] = ctList.get(i).getPhone();
-            rows[3] = ctList.get(i).getEmail();
-            rows[4] = ctList.get(i).getGroupc();
 
+        // Kiểm tra xem ctList có dữ liệu không
+        if (ctList.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Không có liên hệ nào để hiển thị.");
+            jTable1.setModel(model); // Đặt mô hình rỗng
+            return;
+        }
+
+        for (contact c : ctList) {
+            Object[] rows = new Object[5];
+            rows[0] = c.getCid();
+            rows[1] = c.getName();
+            rows[2] = c.getPhone();
+            rows[3] = c.getEmail();
+            rows[4] = c.getGroupc();
             model.addRow(rows);
         }
         jTable1.setModel(model);
-        
         
     }
     
@@ -517,12 +609,17 @@ public class MyContactsForm extends javax.swing.JFrame {
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
         // TODO add your handling code here:
-        clearInput();
-        jTable1.clearSelection();
-         txtSearch.setText(null);
-        TableRowSorter<DefaultTableModel> obj = new TableRowSorter<>((DefaultTableModel) jTable1.getModel());
-        jTable1.setRowSorter(obj);
-        obj.setRowFilter(null); 
+        clearInput();  // Xóa các trường nhập liệu
+    jTable1.clearSelection();  // Xóa lựa chọn trong bảng
+    txtSearch.setText(null);  // Đặt lại trường tìm kiếm
+
+    // Đặt lại bộ lọc cho bảng
+    TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>((DefaultTableModel) jTable1.getModel());
+    jTable1.setRowSorter(sorter);
+    sorter.setRowFilter(null);  // Hủy bộ lọc tìm kiếm
+
+    // Hiển thị lại tất cả các liên hệ
+    refreshTable();  // Gọi lại phương thức để hiển thị tất cả liên hệ
     }//GEN-LAST:event_btnClearActionPerformed
 
     private void btnsearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsearchActionPerformed
@@ -540,6 +637,26 @@ public class MyContactsForm extends javax.swing.JFrame {
         jTable1.setRowSorter(obj);
         obj.setRowFilter(RowFilter.regexFilter(txtSearch.getText()));
     }//GEN-LAST:event_txtSearchKeyPressed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        showContactsByGroup("Family");
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        showContactsByGroup("Friend");
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        showContactsByGroup("Other");
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        JTableView();
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -583,6 +700,10 @@ public class MyContactsForm extends javax.swing.JFrame {
     private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnsearch;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
