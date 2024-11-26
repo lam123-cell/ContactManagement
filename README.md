@@ -1,5 +1,5 @@
 # Ứng Dụng Quản Lý Danh Bạ
- ![Image Alt]([image_url](https://github.com/lam123-cell/ContactManagement/blob/main/contactManagement.jpg?raw=true))
+ ![Image Alt](https://github.com/lam123-cell/ContactManagement/blob/main/contactManagement.jpg?raw=true)
 ## Giới Thiệu
 Ứng dụng quản lý danh bạ được xây dựng bằng Java Swing trên nền tảng NetBeans. Ứng dụng này cho phép người dùng thực hiện các chức năng quản lý danh bạ như thêm, sửa, xóa và tìm kiếm liên hệ. Ngoài ra, ứng dụng cũng có chức năng đăng ký và đăng nhập, kèm theo mã hóa mật khẩu khi đăng ký.
 
